@@ -8,17 +8,45 @@ set -x
 
 version=${version:-$(curl -sS https://update.tabnine.com/bundles/version)}
 
-case $(uname -s) in
-"Darwin")
-    if [ "$(uname -m)" == "arm64" ]; then
+archi=$(uname -sm)
+
+case "$archi" in
+    Darwin\ arm64)
         platform="aarch64-apple-darwin"
-    else
+        ;;
+    Darwin\ x86_64)
         platform="$(uname -m)-apple-darwin"
-    fi
-    ;;
-"Linux")
-    platform="$(uname -m)-unknown-linux-musl"
-    ;;
+        ;;
+    Linux\ armv5*)
+        platform="$(uname -m)-unknown-linux-musl"
+        ;;
+    Linux\ armv6*)
+        platform="$(uname -m)-unknown-linux-musl"
+        ;;
+    Linux\ armv7*)
+        platform="$(uname -m)-apple-darwin"
+        ;;
+    Linux\ armv8*)
+        platform="$(uname -m)-apple-darwin"
+        ;;
+    Linux\ aarch64*)
+        platform="aarch64-apple-darwin"
+        ;;
+    Linux\ *64)
+        platform="aarch64-apple-darwin"
+        ;;
+    CYGWIN*\ *64)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
+    MINGW*\ *64)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
+    MSYS*\ *64)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
+    Windows*\ *64)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
 esac
 
 # we want the binary to reside inside our plugin's dir
