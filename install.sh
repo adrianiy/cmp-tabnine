@@ -18,22 +18,22 @@ case "$archi" in
         platform="$(uname -m)-apple-darwin"
         ;;
     Linux\ armv5*)
-        platform="$(uname -m)-unknown-linux-musl"
+        platform="unknown-linux-musl"
         ;;
     Linux\ armv6*)
-        platform="$(uname -m)-unknown-linux-musl"
+        platform="unknown-linux-musl"
         ;;
     Linux\ armv7*)
-        platform="$(uname -m)-apple-darwin"
+        platform="unknown-linux-musl"
         ;;
     Linux\ armv8*)
-        platform="$(uname -m)-apple-darwin"
+        platform="unknown-linux-musl"
         ;;
     Linux\ aarch64*)
-        platform="aarch64-apple-darwin"
+        platform="unknown-linux-musl"
         ;;
     Linux\ *64)
-        platform="aarch64-apple-darwin"
+        platform="unknown-linux-musl"
         ;;
     CYGWIN*\ *64)
         platform="$(uname -m)-pc-windows-gnu"
@@ -45,6 +45,18 @@ case "$archi" in
         platform="$(uname -m)-pc-windows-gnu"
         ;;
     Windows*\ *64)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
+    CYGWIN*\ *32)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
+    MINGW*\ *32)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
+    MSYS*\ *32)
+        platform="$(uname -m)-pc-windows-gnu"
+        ;;
+    Windows*\ *32)
         platform="$(uname -m)-pc-windows-gnu"
         ;;
 esac
