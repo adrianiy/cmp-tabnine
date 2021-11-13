@@ -62,6 +62,7 @@ local function binary()
 				table.insert(versions, {path=path, version=version})
 			end
 		end
+        table.insert(versions, {path=path, version="3.9.2"})
 	end
 	table.sort(versions, function (a, b) return a.version < b.version end)
 	local latest = versions[#versions]
@@ -71,11 +72,14 @@ local function binary()
 	end
 
 	local platform = nil
+    local extension = ''
 	local arch, _ = string.gsub(fn.system('uname -m'), '\n$', '')
 	if fn.has('win32') == 1 then
-		platform = 'i686-pc-windows-gnu'
+		platform = 'x86_64-pc-windows-gnu'
+        extension = '.exe'
 	elseif fn.has('win64') == 1 then
 		platform = 'x86_64-pc-windows-gnu'
+        extension = '.exe'
 	elseif fn.has('mac') == 1 then
 		if arch == 'arm64' then
 			platform = 'aarch64-apple-darwin'
@@ -85,7 +89,7 @@ local function binary()
 	elseif fn.has('unix') == 1 then
 		platform = arch .. '-unknown-linux-musl'
 	end
-	return latest.path .. '/' .. platform .. '/' .. 'TabNine'
+	return latest.path .. '/' .. platform .. '/' .. 'TabNine' .. extension
 end
 
 local Source = {
